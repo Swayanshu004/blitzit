@@ -1,0 +1,221 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { Label } from "./ui/label"
+import { Plus, Clock, Calendar, Sparkles } from "lucide-react"
+
+export function TaskInput({ onAddTask }) {
+  const [input, setInput] = useState("")
+  const [timerDuration, setTimerDuration] = useState("25")
+  const [scheduledTime, setScheduledTime] = useState("")
+  const [priority, setPriority] = useState("medium")
+  const [showAdvanced, setShowAdvanced] = useState(false)
+
+  const parseTimeFromText = (text) => {
+    const patterns = [
+      /(\d+(?:\.\d+)?)\s*(?:hours?|hrs?|h)\s*(?:(\d+(?:\.\d+)?)\s*(?:minutes?|mins?|m))?/gi,
+      /(\d+(?:\.\d+)?)\s*(?:minutes?|mins?|m)/gi,
+      /(\d+(?:\.\d+)?)\s*(?:h|hr|hrs|hours?)\s*(\d+(?:\.\d+)?)\s*(?:m|min|mins|minutes?)/gi,
+    ]
+
+    let totalMinutes = 25 // Default 25 minutes
+    let cleanTitle = text
+
+    for (const pattern of patterns) {
+      const matches = Array.from(text.matchAll(pattern))
+      if (matches.length > 0) {
+        const match = matches[0]
+
+        if (pattern.source.includes("hours?|hrs?|h")) {
+          const hours = Number.parseFloat(match[1]) || 0
+          const minutes = Number.parseFloat(match[2]) || 0
+          totalMinutes = hours * 60 + minutes
+        } else {
+          totalMinutes = Number.parseFloat(match[1]) || 25
+        }
+
+        cleanTitle = text.replace(match[0], "").trim()
+        break
+      }
+    }
+
+    return {
+      title: cleanTitle || text,
+      time: Math.max(1, Math.round(totalMinutes)),
+    }
+  }
+
+  const formatTimeInput = (value) => {
+    // Remove any non-digit characters except colon
+    const cleaned = value.replace(/[^\d:]/g, "")
+
+    // Handle basic time format
+    if (cleaned.includes(":")) {
+      const [hours, minutes] = cleaned.split(":")
+      if (hours && minutes) {
+        const h = Number.parseInt(hours)
+        const m = Number.parseInt(minutes)
+        if (h >= 1 && h <= 12 && m >= 0 && m <= 59) {
+          return cleaned
+        }
+      }
+    }
+
+    return cleaned
+  }
+
+  const handleTimeChange = (e) => {
+    const formatted = formatTimeInput(e.target.value)
+    setScheduledTime(formatted)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (input.trim()) {
+      const { title, time } = parseTimeFromText(input.trim())
+      onAddTask(title, time, Number.parseInt(timerDuration), scheduledTime || undefined, priority)
+      setInput("")
+      setScheduledTime("")
+      setShowAdvanced(false)
+    }
+  }
+
+  return (
+    <div className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="flex gap-2">
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Add a task (e.g., 'Review code for 1h 30m')"
+            className="flex-1 bg-white/80 backdrop-blur-sm border-gray-200 focus:border-blue-400 focus:ring-blue-400/20"
+          />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className={`px-3 transition-all duration-200 ${
+              showAdvanced
+                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent shadow-lg"
+                : "bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
+            }`}
+          >
+            {showAdvanced ? <Sparkles className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
+          </Button>
+          <Button
+            type="submit"
+            size="sm"
+            className="px-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg"
+          >
+            <Plus className="w-4 h-4" />
+          </Button>
+        </div>
+
+        {showAdvanced && (
+          <div className="bg-gradient-to-br from-blue-50/80 to-purple-50/80 backdrop-blur-sm p-4 rounded-xl border border-blue-200/50 shadow-lg space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="timer-duration" className="text-sm font-medium text-gray-700 flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  Timer Duration
+                </Label>
+                <Select value={timerDuration} onValueChange={setTimerDuration}>
+                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="15">15 min</SelectItem>
+                    <SelectItem value="25">25 min</SelectItem>
+                    <SelectItem value="30">30 min</SelectItem>
+                    <SelectItem value="45">45 min</SelectItem>
+                    <SelectItem value="60">1 hour</SelectItem>
+                    <SelectItem value="90">1.5 hours</SelectItem>
+                    <SelectItem value="120">2 hours</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="priority" className="text-sm font-medium text-gray-700 flex items-center gap-1">
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-400 to-red-400" />
+                  Priority
+                </Label>
+                <Select value={priority} onValueChange={(value) => setPriority(value)}>
+                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-green-500" />
+                        Low
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="medium">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-blue-500" />
+                        Medium
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="high">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-orange-500" />
+                        High
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="urgent">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-red-500" />
+                        Urgent
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="scheduled-time" className="text-sm font-medium text-gray-700 flex items-center gap-1">
+                <Calendar className="w-3 h-3" />
+                Scheduled Time (optional)
+              </Label>
+              <div className="flex gap-2">
+                <Input
+                  id="scheduled-time"
+                  value={scheduledTime}
+                  onChange={handleTimeChange}
+                  placeholder="7:00"
+                  className="flex-1 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 focus:ring-blue-400/20"
+                  maxLength={5}
+                />
+                <Select
+                  value={scheduledTime.includes("am") ? "am" : scheduledTime.includes("pm") ? "pm" : ""}
+                  onValueChange={(period) => {
+                    if (scheduledTime && !scheduledTime.includes("am") && !scheduledTime.includes("pm")) {
+                      setScheduledTime(scheduledTime + period)
+                    } else {
+                      setScheduledTime(scheduledTime.replace(/(am|pm)/, period))
+                    }
+                  }}
+                >
+                  <SelectTrigger className="w-20 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400">
+                    <SelectValue placeholder="AM/PM" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="am">AM</SelectItem>
+                    <SelectItem value="pm">PM</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <p className="text-xs text-gray-500 mt-1">Format: 7:00 AM or 2:30 PM</p>
+            </div>
+          </div>
+        )}
+      </form>
+    </div>
+  )
+}
