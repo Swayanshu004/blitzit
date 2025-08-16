@@ -111,21 +111,13 @@ export function TaskBoard({
   }
 
   return (
-    <div className="main-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-black dark:via-gray-900 dark:to-black transition-colors">
+    <div className="main-container min-h-screen bg-gradient-to-b from-black via-neutral-900 to-neutral-950 transition-colors">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8 p-4 component-bg rounded-2xl border shadow-lg">
-          <h1 className="text-4xl font-bold bg-gradient-to-t from-blue-600 to-purple-600 dark:from-amber-600 dark:to-yellow-200 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold bg-gradient-to-t from-amber-600 to-yellow-200 bg-clip-text text-transparent">
             Blitzit
           </h1>
           <div className="flex items-center gap-3">
-            <Button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              variant="outline"
-              size="sm"
-              className="component-bg border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-high-contrast"
-            >
-              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </Button>
             <Button
               onClick={() => setShowStats(!showStats)}
               variant="outline"

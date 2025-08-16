@@ -32,9 +32,9 @@ export function QuickActions({ tasks, onMoveAll, onClearCompleted, onDeleteTask 
   }
 
   return (
-    <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+    <Card className="bg-gradient-to-t from-purple-800 to-black border-purple-800">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-purple-800 flex items-center gap-2">
+        <CardTitle className="text-lg font-semibold text-white flex items-center gap-2">
           <Zap className="w-5 h-5" />
           Quick Actions
         </CardTitle>

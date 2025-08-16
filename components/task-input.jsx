@@ -9,10 +9,10 @@ import { Plus, Clock, Calendar, Sparkles } from "lucide-react"
 
 export function TaskInput({ onAddTask }) {
   const [input, setInput] = useState("")
-  const [timerDuration, setTimerDuration] = useState("25")
-  const [scheduledTime, setScheduledTime] = useState("")
+  const [timerDuration, setTimerDuration] = useState("15")
+  const [scheduledTime, setScheduledTime] = useState("0:0am")
   const [priority, setPriority] = useState("medium")
-  const [showAdvanced, setShowAdvanced] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(true)
 
   const parseTimeFromText = (text) => {
     const patterns = [
@@ -100,11 +100,11 @@ export function TaskInput({ onAddTask }) {
             onClick={() => setShowAdvanced(!showAdvanced)}
             className={`px-3 transition-all duration-200 ${
               showAdvanced
-                ? "bg-gradient-to-t from-amber-600 to-yellow-300 border-transparent shadow-lg"
-                : "bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
+                ? "bg-gradient-to-t from-amber-600 to-yellow-300 shadow-lg"
+                : "bg-neutral-900 backdrop-blur-sm border-gray-200 hover:bg-gradient-to-t hover:from-amber-600 hover:to-yellow-300"
             }`}
           >
-            {showAdvanced ? <Sparkles className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
+            <Sparkles className="w-4 h-4" />
           </Button>
           <Button
             type="submit"
@@ -124,11 +124,11 @@ export function TaskInput({ onAddTask }) {
                   Timer Duration
                 </Label>
                 <Select value={timerDuration} onValueChange={setTimerDuration}>
-                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 text-black">
+                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm focus:border-blue-400 text-black">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="15">15 min</SelectItem>
+                    <SelectItem value="15" selected>15 min</SelectItem>
                     <SelectItem value="25">25 min</SelectItem>
                     <SelectItem value="30">30 min</SelectItem>
                     <SelectItem value="45">45 min</SelectItem>
@@ -179,7 +179,7 @@ export function TaskInput({ onAddTask }) {
             </div>
 
             <div>
-              <Label htmlFor="scheduled-time" className="text-sm font-medium text-gray-700 flex items-center gap-1 text-black">
+              <Label htmlFor="scheduled-time" className="text-sm font-medium flex items-center gap-1 text-black">
                 <Calendar className="w-3 h-3" />
                 Scheduled Time (optional)
               </Label>
@@ -189,7 +189,7 @@ export function TaskInput({ onAddTask }) {
                   value={scheduledTime}
                   onChange={handleTimeChange}
                   placeholder="7:00"
-                  className="flex-1 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 focus:ring-blue-400/20 text-black"
+                  className="flex-1 h-9 bg-white/80 backdrop-blur-sm focus:ring-amber-400 text-black"
                   maxLength={5}
                 />
                 <Select
@@ -202,12 +202,12 @@ export function TaskInput({ onAddTask }) {
                     }
                   }}
                 >
-                  <SelectTrigger className="w-20 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 text-black">
-                    <SelectValue placeholder="AM/PM" />
+                  <SelectTrigger className="w-20 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 text-black text-xs px-2">
+                    <SelectValue placeholder="am | pm" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="am">AM</SelectItem>
-                    <SelectItem value="pm">PM</SelectItem>
+                    <SelectItem value="am" selected>am</SelectItem>
+                    <SelectItem value="pm">pm</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
