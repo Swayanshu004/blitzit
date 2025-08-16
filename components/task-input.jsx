@@ -91,7 +91,7 @@ export function TaskInput({ onAddTask }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Add a task (e.g., 'Review code for 1h 30m')"
-            className="flex-1 bg-white/80 backdrop-blur-sm border-gray-200 focus:border-blue-400 focus:ring-blue-400/20"
+            className="flex-1 bg-white/80 backdrop-blur-sm border-gray-200 focus:border-amber-500  text-black font-semibold"
           />
           <Button
             type="button"
@@ -100,7 +100,7 @@ export function TaskInput({ onAddTask }) {
             onClick={() => setShowAdvanced(!showAdvanced)}
             className={`px-3 transition-all duration-200 ${
               showAdvanced
-                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent shadow-lg"
+                ? "bg-gradient-to-t from-amber-600 to-yellow-300 border-transparent shadow-lg"
                 : "bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
             }`}
           >
@@ -109,7 +109,7 @@ export function TaskInput({ onAddTask }) {
           <Button
             type="submit"
             size="sm"
-            className="px-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 shadow-lg"
+            className="px-3 bg-gradient-to-t from-amber-600 to-yellow-300 hover:from-yellow-300 hover:to-amber-600 shadow-lg"
           >
             <Plus className="w-4 h-4" />
           </Button>
@@ -124,7 +124,7 @@ export function TaskInput({ onAddTask }) {
                   Timer Duration
                 </Label>
                 <Select value={timerDuration} onValueChange={setTimerDuration}>
-                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400">
+                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 text-black">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -145,25 +145,25 @@ export function TaskInput({ onAddTask }) {
                   Priority
                 </Label>
                 <Select value={priority} onValueChange={(value) => setPriority(value)}>
-                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400">
+                  <SelectTrigger className="h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 text-black">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="low">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-500" />
+                        <div className="w-2 h-2 rounded-full bg-lime-500" />
                         Low
                       </div>
                     </SelectItem>
                     <SelectItem value="medium">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-500" />
+                        <div className="w-2 h-2 rounded-full bg-cyan-400" />
                         Medium
                       </div>
                     </SelectItem>
                     <SelectItem value="high">
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-orange-500" />
+                        <div className="w-2 h-2 rounded-full bg-amber-500" />
                         High
                       </div>
                     </SelectItem>
@@ -179,7 +179,7 @@ export function TaskInput({ onAddTask }) {
             </div>
 
             <div>
-              <Label htmlFor="scheduled-time" className="text-sm font-medium text-gray-700 flex items-center gap-1">
+              <Label htmlFor="scheduled-time" className="text-sm font-medium text-gray-700 flex items-center gap-1 text-black">
                 <Calendar className="w-3 h-3" />
                 Scheduled Time (optional)
               </Label>
@@ -189,7 +189,7 @@ export function TaskInput({ onAddTask }) {
                   value={scheduledTime}
                   onChange={handleTimeChange}
                   placeholder="7:00"
-                  className="flex-1 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 focus:ring-blue-400/20"
+                  className="flex-1 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 focus:ring-blue-400/20 text-black"
                   maxLength={5}
                 />
                 <Select
@@ -202,7 +202,7 @@ export function TaskInput({ onAddTask }) {
                     }
                   }}
                 >
-                  <SelectTrigger className="w-20 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400">
+                  <SelectTrigger className="w-20 h-9 bg-white/80 backdrop-blur-sm border-blue-200 focus:border-blue-400 text-black">
                     <SelectValue placeholder="AM/PM" />
                   </SelectTrigger>
                   <SelectContent>
@@ -211,7 +211,6 @@ export function TaskInput({ onAddTask }) {
                   </SelectContent>
                 </Select>
               </div>
-              <p className="text-xs text-gray-500 mt-1">Format: 7:00 AM or 2:30 PM</p>
             </div>
           </div>
         )}

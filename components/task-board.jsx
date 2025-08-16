@@ -114,7 +114,7 @@ export function TaskBoard({
     <div className="main-container min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-black dark:via-gray-900 dark:to-black transition-colors">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8 p-4 component-bg rounded-2xl border shadow-lg">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold bg-gradient-to-t from-blue-600 to-purple-600 dark:from-amber-600 dark:to-yellow-200 bg-clip-text text-transparent">
             Blitzit
           </h1>
           <div className="flex items-center gap-3">
@@ -145,7 +145,7 @@ export function TaskBoard({
             <Button
               onClick={() => onStartBlitz()}
               disabled={todayTasks.length === 0}
-              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-6 py-2 rounded-lg flex items-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-gradient-to-t from-amber-700 to-yellow-400 hover:from-yellow-400 hover:to-amber-700 text-black font-semibold px-6 py-2 rounded-lg flex items-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Zap className="w-4 h-4" />
               BLITZ NOW
@@ -159,16 +159,7 @@ export function TaskBoard({
           </div>
         )}
 
-        <div className="mb-6">
-          <QuickActions
-            tasks={tasks}
-            onMoveAll={moveAllToColumn}
-            onClearCompleted={clearCompletedTasks}
-            onDeleteTask={deleteTask}
-          />
-        </div>
-
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd} className="z-0">
           <div className="task-columns">
             <div className="bg-white/10 dark:bg-black/20 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/30">
               <div className="p-6 border-b border-white/20 dark:border-gray-700/30 bg-white/5 dark:bg-black/10 backdrop-blur-sm">
@@ -210,7 +201,7 @@ export function TaskBoard({
                 )}
               </Droppable>
 
-              <div className="p-4 border-t border-white/20 dark:border-gray-700/30 bg-white/5 dark:bg-black/10 backdrop-blur-sm">
+              <div className="p-4 border-t border-white/20 dark:border-gray-700/30 bg-white/5 dark:bg-black backdrop-blur-sm">
                 <TaskInput onAddTask={addTask} />
               </div>
             </div>
@@ -346,6 +337,14 @@ export function TaskBoard({
             )}
           </div>
         </DragDropContext>
+        <div className="mb-6">
+          <QuickActions
+            tasks={tasks}
+            onMoveAll={moveAllToColumn}
+            onClearCompleted={clearCompletedTasks}
+            onDeleteTask={deleteTask}
+          />
+        </div>
       </div>
     </div>
   )

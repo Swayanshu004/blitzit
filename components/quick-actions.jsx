@@ -45,7 +45,7 @@ export function QuickActions({ tasks, onMoveAll, onClearCompleted, onDeleteTask 
             <Button
               onClick={moveUrgentToToday}
               size="sm"
-              className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white"
+              className="bg-gradient-to-b from-red-500 to-amber-500 hover:bg-gradient-to-t text-white"
             >
               <AlertTriangle className="w-3 h-3 mr-1" />
               Move {urgentTasks.length} Urgent to Today
