@@ -32,7 +32,7 @@ export function QuickActions({ tasks, onMoveAll, onClearCompleted, onDeleteTask 
   }
 
   return (
-    <Card className="bg-gradient-to-t from-purple-800 to-black border-purple-800">
+    <Card className="bg-gradient-to-t from-amber-800 to-black border-purple-800">
       <CardHeader>
         <CardTitle className="text-lg font-semibold text-white flex items-center gap-2">
           <Zap className="w-5 h-5" />
@@ -57,7 +57,7 @@ export function QuickActions({ tasks, onMoveAll, onClearCompleted, onDeleteTask 
               onClick={promoteWeekToToday}
               size="sm"
               variant="outline"
-              className="border-blue-200 text-blue-700 hover:bg-blue-50 bg-transparent"
+              className="border-blue-200 text-blue-700 hover:bg-blue-500 hover:text-white bg-white"
             >
               <ArrowRight className="w-3 h-3 mr-1" />
               Promote Week to Today ({thisWeekTasks.length})
@@ -69,7 +69,7 @@ export function QuickActions({ tasks, onMoveAll, onClearCompleted, onDeleteTask 
               onClick={() => onMoveAll("backlog", "thisWeek")}
               size="sm"
               variant="outline"
-              className="border-green-200 text-green-700 hover:bg-green-50"
+              className="border-green-200 text-green-700 bg-white hover:bg-green-100"
             >
               <Calendar className="w-3 h-3 mr-1" />
               Plan Backlog ({backlogTasks.length})
@@ -81,7 +81,7 @@ export function QuickActions({ tasks, onMoveAll, onClearCompleted, onDeleteTask 
               onClick={archiveCompleted}
               size="sm"
               variant="outline"
-              className="border-gray-200 text-gray-700 hover:bg-gray-50 bg-transparent"
+              className="border-gray-200 text-gray-700 hover:bg-gray-50 bg-white"
             >
               <Trash2 className="w-3 h-3 mr-1" />
               Archive {doneTasks.length} Completed
@@ -92,7 +92,7 @@ export function QuickActions({ tasks, onMoveAll, onClearCompleted, onDeleteTask 
             <Button
               onClick={() => onMoveAll("thisWeek", "today")}
               size="sm"
-              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+              className="bg-gradient-to-t from-neutral-600 to-neutral-950 hover:bg-gradient-to-b text-white"
             >
               <RotateCcw className="w-3 h-3 mr-1" />
               Fill Today from This Week

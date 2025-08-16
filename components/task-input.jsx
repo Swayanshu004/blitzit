@@ -91,7 +91,7 @@ export function TaskInput({ onAddTask }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Add a task (e.g., 'Review code for 1h 30m')"
-            className="flex-1 bg-white/80 backdrop-blur-sm border-gray-200 focus:border-amber-500  text-black font-semibold"
+            className="flex-1 bg-white backdrop-blur-sm border-gray-200 focus:border-amber-500  text-black font-semibold"
           />
           <Button
             type="button"
